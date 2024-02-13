@@ -70,3 +70,10 @@ export interface Subscription {
   trial_end?: string;
   prices?: Price;
 }
+
+export interface NewsItem {
+  title: string;
+  description: string;
+  publishedAt: string;
+  url: string;
+}

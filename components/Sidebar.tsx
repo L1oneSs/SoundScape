@@ -1,6 +1,6 @@
 "use client";
 
-import { HiHome } from "react-icons/hi";
+import { HiHome, HiNewspaper } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import { twMerge } from "tailwind-merge";
 import { usePathname } from "next/navigation";
@@ -23,19 +23,25 @@ const Sidebar = ({ children, songs }: SidebarProps) => {
   const player = usePlayer();
 
   const routes = useMemo(() => [
-    {
-      icon: HiHome,
-      label: 'Home',
-      active: pathname !== '/search',
-      href: '/'
-    },
-    {
-      icon: BiSearch,
-      label: 'Search',
-      href: '/search',
-      active: pathname === '/search'
-    },
-  ], [pathname]);
+  {
+    icon: HiHome,
+    label: 'Home',
+    active: pathname !== '/search',
+    href: '/'
+  },
+  {
+    icon: BiSearch,
+    label: 'Search',
+    href: '/search',
+    active: pathname === '/search'
+  },
+  {
+    icon: HiNewspaper, 
+    label: 'News', 
+    href: '/news', 
+    active: pathname === '/news' 
+  },
+], [pathname]);
 
   return (
     <div 

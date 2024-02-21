@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
 import { useUser } from "@/hooks/useUser";
 import Button from "@/components/Button";
 import useSubscribeModal from "@/hooks/useSubscribeModal";

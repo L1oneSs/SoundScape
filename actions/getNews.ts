@@ -1,13 +1,16 @@
 import axios from 'axios';
 
 const getMusicNews = async () => {
+
+  const NEWS_API_KEY = 'de1c6ca593b64f6f9df6d887dc55e853'
+
   try {
     const musicResponse = await axios.get('https://newsapi.org/v2/top-headlines', {
       params: {
         country: 'us',
         category: 'entertainment',
         q: 'music',
-        apiKey: 'de1c6ca593b64f6f9df6d887dc55e853' 
+        apiKey: NEWS_API_KEY 
       }
     });
 
@@ -16,7 +19,7 @@ const getMusicNews = async () => {
         country: 'gb',
         category: 'entertainment',
         q: 'music',
-        apiKey: 'de1c6ca593b64f6f9df6d887dc55e853' 
+        apiKey: NEWS_API_KEY
       }
     });
 
@@ -33,3 +36,6 @@ const getMusicNews = async () => {
 };
 
 export default getMusicNews;
+
+
+

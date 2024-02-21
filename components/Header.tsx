@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FaUserAlt } from "react-icons/fa";
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { toast } from "react-hot-toast";
-import { HiHome } from "react-icons/hi";
+import { HiHome, HiNewspaper } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 
 import useAuthModal from "@/hooks/useAuthModal";
@@ -116,6 +116,22 @@ const Header: React.FC<HeaderProps> = ({
             "
           >
             <BiSearch className="text-black" size={20} />
+          </button>
+          <button 
+            onClick={() => router.push('/news')} 
+            className="
+              rounded-full 
+              p-2 
+              bg-white 
+              flex 
+              items-center 
+              justify-center 
+              cursor-pointer 
+              hover:opacity-75 
+              transition
+            "
+          >
+            <HiNewspaper className="text-black" size={20} />
           </button>
         </div>
         <div className="flex justify-between items-center gap-x-4">

@@ -1,16 +1,24 @@
 import getSongs from "@/actions/getSongs";
 import Header from "@/components/Header";
 import ListItem from "@/components/ListItem";
-
 import PageContent from "./components/PageContent";
-
 import greetings from "./greetings"
+import getAllAlbums from "@/actions/getAllAlbums";
+import getSongsForAlbum from "@/actions/getSongsForAlbum";
 
 
 export const revalidate = 0;
 
 export default async function Home() {
   const songs = await getSongs();
+  const albums = await getAllAlbums();
+
+  const albumSongs = await Promise.all(albums.map(async (album) => {
+    return {
+      albumId: album.id,
+      songs: await getSongsForAlbum(album.id)
+    };
+  }));
 
   const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
 
@@ -57,7 +65,7 @@ export default async function Home() {
       <div className="mt-2 mb-7 px-6">
         <div className="flex justify-between items-center">
         </div>
-        <PageContent songs={songs} />
+        <PageContent songs={songs} albums={albums} albumSongs={albumSongs} />
       </div>
     </div>
   )

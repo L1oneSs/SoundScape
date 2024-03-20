@@ -9,6 +9,27 @@ export interface Song {
   image_path: string;
 }
 
+export interface Playlist {
+  id: string;
+  title: string;
+  description: string;
+  image_url: string;
+  user_id: string;
+  created_at: string;
+}
+
+export interface Album {
+  id: string;
+  title: string;
+  release_year: number;
+  genre: string;
+  artist: string;
+  image_url: string;
+  user_id: string;
+  created_at: string;
+}
+
+
 export interface Product {
   id: string;
   active?: boolean;

@@ -56,7 +56,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
     if (sound) {
       sound.play();
   
-      // Возвращаем функцию для выполнения при размонтировании компонента
+      
       return () => {
         sound.unload();
       };
@@ -234,42 +234,45 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
       </div>
 
       <Modal
-      isOpen={modalIsOpen}
-      onRequestClose={closeModal}
-      style={{
-        content: {
-          background: 'black',
-          //opacity: 0.95,
-          color: 'white',
-          padding: '6px',
-          borderRadius: '10px',
-          margin: 'auto',
-          maxWidth: '400px', 
-          maxHeight: '400px'
-        },
-      }}
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={{
+          content: {
+            background: 'rgba(51, 51, 51, 1)', 
+            color: 'white',
+            padding: '6px',
+            borderRadius: '10px',
+            margin: 'auto',
+            maxWidth: '500px', 
+            maxHeight: '500px'
+          },
+          overlay: {
+            background: 'rgba(51, 51, 51, 0.9)' 
+          }
+        }}
+      >
+        <div>
+          {geniusSongData ? (
+            <>
+              <h2 className='mb-2 text-lg'>{geniusSongData.title}</h2>
+              {geniusSongData.lyrics ? (
+                <p className="whitespace-pre-line mb-4 text-base">
+                  {geniusSongData.lyrics
+                    .split('\n')
+                    .slice(1)
+                    .join('\n')}
+                </p>
+              ) : (
+                <p>No Lyrics available</p>
+              )}
+            </>
+          ) : (
+            <p>No Song Data available</p>
+          )}
+        </div>
+      </Modal>
 
-    >
-      <div>
-        {geniusSongData ? (
-          <>
-            <h2 className='mb-2 text-lg'>{geniusSongData.title}</h2>
-            {geniusSongData.lyrics ? (
-              <p className="whitespace-pre-line mb-4 text-base">
-              {geniusSongData.lyrics
-                .split('\n')
-                .slice(1)
-                .join('\n')}
-            </p>
-            ) : (
-              <p>No Lyrics available</p>
-            )}
-          </>
-        ) : (
-          <p>No Song Data available</p>
-        )}
-      </div>
-    </Modal>
+
 
 
     </div>

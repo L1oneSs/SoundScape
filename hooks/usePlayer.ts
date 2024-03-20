@@ -1,16 +1,14 @@
-// usePlayer.ts
-
 import { create } from 'zustand';
 
 interface PlayerStore {
   ids: string[];
   activeId?: string;
   isShuffle: boolean;
-  isLoop: boolean; // Новое состояние для зацикливания трека
+  isLoop: boolean; 
   setId: (id: string) => void;
   setIds: (ids: string[]) => void;
   toggleShuffle: () => void;
-  toggleLoop: () => void; // Новая функция для переключения зацикливания
+  toggleLoop: () => void; 
   reset: () => void;
 }
 

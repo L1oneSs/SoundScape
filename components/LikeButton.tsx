@@ -26,25 +26,34 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   const [isLiked, setIsLiked] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!user?.id) {
-      return;
-    }
-  
-    const fetchData = async () => {
-      const { data, error } = await supabaseClient
+  if (!user?.id) {
+    setIsLiked(false); 
+    return;
+  }
+
+  const fetchData = async () => {
+    try {
+      const { data: likedSongs, error } = await supabaseClient
         .from('liked_songs')
-        .select('*')
-        .eq('user_id', user.id)
-        .eq('song_id', songId)
-        .single();
+        .select('song_id')
+        .eq('user_id', user.id);
 
-      if (!error && data) {
-        setIsLiked(true);
+      if (error) {
+        throw error;
       }
-    }
 
-    fetchData();
-  }, [songId, supabaseClient, user?.id]);
+      const isSongLiked = likedSongs.some(song => song.song_id === songId);
+      setIsLiked(isSongLiked);
+    } catch (error) {
+      console.error('Error fetching liked songs:', error);
+      setIsLiked(false); 
+    }
+  };
+
+  fetchData();
+}, [songId, supabaseClient, user?.id]);
+
+
 
   const Icon = isLiked ? AiFillHeart : AiOutlineHeart;
 

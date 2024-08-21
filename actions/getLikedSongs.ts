@@ -11,17 +11,54 @@ const getLikedSongs = async (): Promise<Song[]> => {
     data: { session },
   } = await supabase.auth.getSession();
 
-  const { data } = await supabase 
-    .from('liked_songs')
-    .select('*, songs(*)')
-    .eq('user_id', session?.user?.id)
-    .order('created_at', { ascending: false })
+  if (!session?.user?.id) {
+    console.error("User is not authenticated");
+    return [];
+  }
 
-  if (!data) return [];
+  try {
+    const { data: likedSongsData, error } = await supabase
+      .from('liked_songs')
+      .select('song_id')
+      .eq('user_id', session.user.id)
+      .order('created_at', { ascending: false });
 
-  return data.map((item) => ({
-    ...item.songs
-  }))
+    if (error) {
+      throw error;
+    }
+
+    if (!likedSongsData) {
+      console.error("No liked songs found");
+      return [];
+    }
+
+    const songIds = likedSongsData.map((likedSong: any) => likedSong.song_id);
+
+    const { data: songsData} = await supabase
+      .from('songs')
+      .select('*')
+      .in('id', songIds);
+
+
+    if (!songsData) {
+      console.error("No songs found for the liked songs");
+      return [];
+    }
+
+    const likedSongs: Song[] = songsData.map((songData: any) => ({
+      id: songData.id,
+      user_id: songData.user_id,
+      author: songData.author,
+      title: songData.title,
+      song_path: songData.song_path,
+      image_path: songData.image_path
+    }));
+
+    return likedSongs;
+  } catch (error) {
+    console.error('Error getting liked songs:');
+    return [];
+  }
 };
 
 export default getLikedSongs;
